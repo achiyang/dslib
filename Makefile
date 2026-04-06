@@ -8,6 +8,8 @@ SRC = \
 
 VECTOR_TEST = tests/test_vector.c
 DEQUE_TEST = tests/test_deque.c
+STACK_TEST = tests/test_stack.c
+QUEUE_TEST = tests/test_queue.c
 
 all: test_vector test_deque
 
@@ -17,11 +19,23 @@ test_vector: $(VECTOR_TEST) $(SRC)
 test_deque: $(DEQUE_TEST) $(SRC)
 	$(CC) $(CFLAGS) $(DEQUE_TEST) $(SRC) -o test_deque
 
+test_stack: $(STACK_TEST) $(SRC)
+	$(CC) $(CFLAGS) $(STACK_TEST) $(SRC) -o test_stack
+
+test_queue: $(QUEUE_TEST) $(SRC)
+	$(CC) $(CFLAGS) $(QUEUE_TEST) $(SRC) -o test_queue
+
 run_vector: test_vector
 	./test_vector
 
 run_deque: test_deque
 	./test_deque
 
+run_stack: test_stack
+	./test_stack
+
+run_queue: test_queue
+	./test_queue
+
 clean:
-	rm -f test_vector test_deque
+	rm -f test_vector test_deque test_stack test_queue
