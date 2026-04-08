@@ -98,7 +98,7 @@ static ds_status ds_heap_sift_down(ds_heap *heap, size_t index) {
 ds_heap *ds_heap_create(const ds_type *type) {
     ds_heap *heap;
 
-    if (!type | !type->compare | type->size == 0) {
+    if (!type || !type->compare || type->size == 0) {
         return NULL;
     }
 
@@ -158,7 +158,7 @@ ds_status ds_heap_push(ds_heap *heap, const void *elem) {
 
     index = ds_vector_size(heap->impl) - 1;
 
-    if (ds_heap_sift_up(heap->impl, index) != DS_OK) {
+    if (ds_heap_sift_up(heap, index) != DS_OK) {
         ds_vector_pop_back(heap->impl);
         return DS_ERR;
     }

@@ -1,7 +1,7 @@
 #include <dslib/ds_vector.h>
 #include <ds_vector_internal.h>
 
-#include <limits.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -31,7 +31,7 @@ static ds_status ds_vector_grow(ds_vector *vec) {
         new_capacity = 4;
     }
     else {
-        if (vec->capacity > __SIZE_MAX__ / 2) {
+        if (vec->capacity > SIZE_MAX / 2) {
             return DS_ERR;
         }
         new_capacity = vec->capacity * 2;
@@ -154,7 +154,7 @@ ds_status ds_vector_reserve(ds_vector *vec, size_t new_capacity) {
         return DS_OK;
     }
 
-    if (new_capacity > __SIZE_MAX__ / vec->type->size) {
+    if (new_capacity > SIZE_MAX / vec->type->size) {
         return DS_ERR;
     }
 

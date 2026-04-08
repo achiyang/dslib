@@ -138,8 +138,8 @@ const ds_type DS_DOUBLE = {
 /* ==================== pointer ==================== */
 
 static int ds_ptr_compare(const void *a, const void *b) {
-    const void *lhs = *(void * const *)a;
-    const void *rhs = *(void * const *)b;
+    uintptr_t lhs = (uintptr_t)(*(void * const *)a);
+    uintptr_t rhs = (uintptr_t)(*(void * const *)b);
 
     return (lhs > rhs) - (lhs < rhs);
 }
@@ -165,8 +165,8 @@ const ds_type DS_PTR = {
 /* ==================== cstring view ==================== */
 
 static int ds_cstring_view_compare(const void *a, const void *b) {
-    const char *lhs = *(char * const *)a;
-    const char *rhs = *(char * const *)b;
+    const char *lhs = *(const char * const *)a;
+    const char *rhs = *(const char * const *)b;
 
     if (!lhs && !rhs) return 0;
     if (!lhs) return -1;
@@ -175,7 +175,7 @@ static int ds_cstring_view_compare(const void *a, const void *b) {
 }
 
 static size_t ds_cstring_view_hash(const void *obj) {
-    const unsigned char *s = (const unsigned char *)(*(char * const *)obj);
+    const unsigned char *s = (const unsigned char *)(*(const char * const *)obj);
     size_t hash = 1469598103934665603ull;
 
     if (!s) {
@@ -191,7 +191,7 @@ static size_t ds_cstring_view_hash(const void *obj) {
 }
 
 static void ds_cstring_view_print(const void *obj, FILE *out) {
-    const char *s = *(char * const *)obj;
+    const char *s = *(const char * const *)obj;
     fprintf(out, "\"%s\"", s ? s : "NULL");
 }
 
