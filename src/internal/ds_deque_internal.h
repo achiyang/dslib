@@ -27,4 +27,4 @@ static inline const void *ds_deque_elem_cptr(const struct ds_deque *dq, size_t l
     return (const void *)(dq->data + (slot * dq->type->size));
 }
 
-#endif
+#endif /* DSLIB_DS_DEQUE_INTERNAL_H */
