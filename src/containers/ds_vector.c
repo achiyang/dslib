@@ -16,18 +16,11 @@ static void ds_vector_elem_copy_in(ds_vector *vec, size_t index, const void *src
     }
 }
 
-static void ds_vector_elem_destroy_at(ds_vector *vec, size_t index) {
-    if (vec->type->destroy) {
-        void *elem = ds_vector_elem_ptr(vec, index);
-        vec->type->destroy(elem);
-    }
-}
-
 static void ds_vector_destroy_all(ds_vector *vec) {
     size_t i;
 
     for (i = vec->size; i > 0; --i) {
-        ds_vector_elem_destroy_at(vec, i - 1);
+        ds_vector_destroy_at(vec, i - 1);
     }
 }
 
@@ -107,7 +100,7 @@ ds_status ds_vector_set(ds_vector *vec, size_t index, const void *elem) {
         return DS_ERR;
     }
 
-    ds_vector_elem_destroy_at(vec, index);
+    ds_vector_destroy_at(vec, index);
     ds_vector_elem_copy_in(vec, index, elem);
 
     return DS_OK;
@@ -144,8 +137,8 @@ ds_status ds_vector_pop_back(ds_vector *vec) {
         return DS_ERR;
     }
 
-    ds_vector_elem_destroy_at(vec, vec->size - 1);
-    vec->size--;
+    ds_vector_destroy_at(vec, vec->size - 1);
+    ds_vector_drop_back_raw(vec);
 
     return DS_OK;
 }

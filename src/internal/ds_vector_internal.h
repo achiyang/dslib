@@ -2,6 +2,7 @@
 #define DSLIB_DS_VECTOR_INTERNAL_H
 
 #include <stddef.h>
+#include <string.h>
 
 #include "dslib/ds_type.h"
 
@@ -18,6 +19,16 @@ static inline void *ds_vector_elem_ptr(struct ds_vector *vec, size_t index) {
 
 static inline const void *ds_vector_elem_cptr(const struct ds_vector *vec, size_t index) {
     return (const void *)(vec->data + (index * vec->type->size));
+}
+
+static inline void ds_vector_destroy_at(struct ds_vector *vec, size_t index) {
+    if (vec->type->destroy) {
+        vec->type->destroy(ds_vector_elem_ptr(vec, index));
+    }
+}
+
+static inline void ds_vector_drop_back_raw(struct ds_vector *vec) {
+    vec->size--;
 }
 
 #endif /* DSLIB_DS_VECTOR_INTERNAL_H */
