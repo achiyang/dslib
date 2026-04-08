@@ -93,7 +93,13 @@ static int ds_float_compare(const void *a, const void *b) {
 }
 
 static size_t ds_float_hash(const void *obj) {
-    return (size_t)(*(const float *)obj);
+    union {
+        float f;
+        uint32_t u;
+    } conv;
+
+    conv.f = *(const float *)obj;
+    return (size_t)conv.u;
 }
 
 static void ds_float_print(const void *obj, FILE *out) {
@@ -119,7 +125,13 @@ static int ds_double_compare(const void *a, const void *b) {
 }
 
 static size_t ds_double_hash(const void *obj) {
-    return (size_t)(*(const double *)obj);
+    union {
+        double d;
+        uint64_t u;
+    } conv;
+
+    conv.d = *(const double *)obj;
+    return (size_t)(conv.u ^ (conv.u >> 32));
 }
 
 static void ds_double_print(const void *obj, FILE *out) {

@@ -1,5 +1,5 @@
-#include <dslib/ds_vector.h>
-#include <ds_vector_internal.h>
+#include "dslib/ds_vector.h"
+#include "ds_vector_internal.h"
 
 #include <stdint.h>
 #include <stdlib.h>

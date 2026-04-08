@@ -11,6 +11,13 @@ struct ds_list_node {
     unsigned char data[];
 };
 
+struct ds_list {
+    const ds_type *type;
+    size_t size;
+    struct ds_list_node *head;
+    struct ds_list_node *tail;
+};
+
 static inline void *ds_list_node_data(struct ds_list_node *node) {
     return (void *)node->data;
 }
