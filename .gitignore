@@ -1,4 +1,2 @@
 *.o
 *.out
-test_vector
-test_deque
